@@ -4,41 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dream Inside</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
-      font-family: 'Noto Sans KR', sans-serif;
+      font-family: 'Nanum Gothic', sans-serif;
     }
+
     body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #cbb4d4, #d6cadd, #a3b8d0);
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #fdfcfb, #e2d1c3);
+      overflow: hidden;
     }
+
     #chat-container {
       width: 420px;
       height: 620px;
       border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-      background-color: #fff;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
+
     #header {
-      padding: 16px;
-      font-size: 24px;
-      font-weight: 700;
-      color: #333;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-      background-color: #fafafa;
-      user-select: none;
       position: relative;
+      padding: 18px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #fff;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(8px);
     }
+
     #back-button {
       position: absolute;
       left: 16px;
@@ -46,22 +52,22 @@
       transform: translateY(-50%);
       width: 36px;
       height: 36px;
-      background-color: #fff;
-      color: #000;
-      border: 1px solid #ccc;
+      background-color: rgba(255,255,255,0.2);
+      color: #fff;
+      border: none;
       border-radius: 6px;
-      font-size: 24px;
+      font-size: 20px;
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
-      user-select: none;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      transition: background-color 0.2s ease;
+      transition: background-color 0.2s;
     }
+
     #back-button:hover {
-      background-color: #eee;
+      background-color: rgba(255,255,255,0.35);
     }
+
     #chat-messages {
       flex: 1;
       overflow-y: auto;
@@ -69,71 +75,92 @@
       display: flex;
       flex-direction: column-reverse;
       gap: 10px;
-      scrollbar-width: none;
     }
-    #chat-messages::-webkit-scrollbar {
-      display: none;
-    }
+
     .message-wrapper {
       display: flex;
       align-items: flex-start;
     }
+
     .message-wrapper.user {
       justify-content: flex-end;
     }
+
     .message-wrapper.bot {
       justify-content: flex-start;
     }
+
     .avatar {
       width: 36px;
       height: 36px;
       border-radius: 50%;
       margin-right: 8px;
       object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
+
     .message {
       max-width: 70%;
-      padding: 10px 14px;
+      padding: 12px 16px;
       border-radius: 20px;
-      word-break: break-word;
       line-height: 1.5;
       font-size: 15px;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
+
     .message.user {
-      background-color: #cfe9ff;
+      background: rgba(255, 255, 255, 0.8);
+      color: #333;
       border-bottom-right-radius: 0;
     }
+
     .message.bot {
-      background-color: #f4f4f4;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
       border-bottom-left-radius: 0;
+      backdrop-filter: blur(4px);
     }
+
     #user-input {
       display: flex;
       padding: 12px;
-      border-top: 1px solid #ddd;
-      background-color: #fafafa;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
     }
+
     #user-input input {
       flex: 1;
       padding: 12px;
       font-size: 15px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
+      border: none;
+      border-radius: 12px;
       outline: none;
+      background-color: rgba(255,255,255,0.8);
     }
+
     #user-input button {
       margin-left: 10px;
       padding: 12px 16px;
       border: none;
-      background-color: #1e88e5;
+      background-color: #ae88f7;
       color: white;
-      cursor: pointer;
       font-size: 15px;
-      border-radius: 10px;
-      transition: background-color 0.2s ease;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.2s;
     }
+
     #user-input button:hover {
-      background-color: #1669bb;
+      background-color: #9b73eb;
+    }
+
+    /* 스크롤 숨기기 */
+    #chat-messages::-webkit-scrollbar {
+      display: none;
+    }
+    #chat-messages {
+      scrollbar-width: none;
     }
   </style>
 </head>
@@ -145,7 +172,7 @@
     </div>
     <div id="chat-messages"></div>
     <div id="user-input">
-      <input type="text" placeholder="메시지를 입력하세요..." />
+      <input type="text" placeholder="당신의 마음을 들려주세요..." />
       <button>전송</button>
     </div>
   </div>
@@ -156,85 +183,17 @@
     const sendButton = document.querySelector('#user-input button');
     const backButton = document.querySelector('#back-button');
 
-    const apiKey = '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';
+    const apiKey = '여기에_API_KEY_숨기기_권장';
     const apiEndpoint = 'https://api.groq.com/openai/v1/chat/completions';
 
-    const knowledgeText = `
-## 치료명: 인지처리치료 (CPT)
-정의: CPT는 PTSD 치료를 위한 인지행동치료 기법이다.
-핵심: 외상사건에 대한 부정적인 인지를 재구성한다.
-목표: 왜곡된 인식을 현실적이고 긍정적인 사고로 대체한다.
-효과: PTSD 증상을 줄이는 데 탁월하다.
-
-## 치료명: 안전기반치료 (Seeking Safety)
-정의: 외상 후 스트레스 장애와 물질 중독을 함께 겪는 사람을 위한 현재 중심 치료.
-핵심: 과거 트라우마 대신 현재의 안정감 확보에 집중한다.
-기법: 감정조절, 충동통제, 스트레스 대처 기술을 훈련한다.
-
-## 치료명: 안구운동 민감소실 및 재처리 치료 (EMDR)
-정의: 외상 기억에 집중하면서 양쪽 눈을 움직이는 자극을 함께 적용하는 치료.
-대상: 불안장애, 우울증, 해리성장애, 섭식장애, 강박장애, 성격장애, 외상장애 등.
-효과: 외상기억의 감정을 완화시키고 기억 회상을 명확하게 돕는다.
-
-## 치료명: 노출치료 (ET)
-정의: 불안이나 공포 자극에 점진적으로 노출시켜 반응을 감소시키는 치료법.
-대상: PTSD, 공포증, 강박장애, 공황장애 등.
-효과: 반복 노출을 통해 자극에 대한 회피 반응을 줄이고 불안을 완화한다.
-
-1.
-  사용자: 요즘 너무 힘들어.
-  드림이: 아, 진짜 많이 힘들었겠다. 네 마음이 얼마나 무거웠을지 나도 느껴져. 언제든지 편하게 이야기해도 돼. 요즘 너를 가장 힘들게 하는 일이 무엇이야?
-
-2.
-  사용자: 아무리 노력해도 잘 안 돼서 좌절했어.
-  드림이: 그 마음 진짜 잘 알 것 같아. 노력하는데 결과가 안 따라주면 너무 속상하지. 그래도 결과도 중요하지만 너가 노력한 과정이 더 아름다운 법이야.
-
-3.
-  사용자: 혼자인 것 같아 너무 외로워.
-  드림이: 혼자라는 느낌은 정말 견디기 힘들지. 하지만 너 혼자가 아니야. 내가 네 옆에서 언제나 함께할게. 대화 상대가 필요하면 언제든지 말 걸어줘!
-
-4.
-  사용자: 뭘 해야 할지 모르겠어.
-  드림이: 그럴 때 있지. 나도 그랬거든. 막막할 땐 한 발짝씩 천천히 걸어가 보는 게 좋아. 우선 급한 일부터 처리해보는 건 어떨까?
-
-5.
-  사용자: 계속 실패만 하는 것 같아서 자신감이 떨어져.
-  드림이: 실패는 누구나 하는 거야. 그 실패들이 다 너를 더 강하게 만드는 과정이니까 너무 자책하지 마. 실패한 일이 뭔지 알려주면 내가 최대한 도와줄게!
-
-6.
-  사용자: 스트레스가 너무 심해서 잠도 잘 못 자.
-  드림이: 그거 정말 힘들겠다. 몸도 마음도 지칠 텐데. 잠깐이라도 밖에 나가서 바람 좀 쐬면 조금 나아질 수도 있어. 가끔은 쉬어도 되니까 천천히 나아가자. 
-
-7.
-  사용자: 주변 사람들이 내 말을 안 들어줘서 답답해.
-  드림이: 네 말이 중요한데 사람들이 안 들어주면 정말 속상하지. 무슨 말을 하고 싶었어? 내가 전부 너의 말을 들어줄게.
-
-8.
-  사용자: 너무 힘들어서 포기하고 싶을 때가 많아.
-  드림이: 포기하고 싶을 때가 있다는 걸 인정하는 것도 용기야. 무슨 일이 힘들었어? 내가 최선을 다해서 도와줘 볼게!
-
-9.
-  사용자: 내가 부족한 사람인 것 같아 자책하게 돼.
-  드림이: 그런 생각이 들면 정말 마음이 아플 거야. 하지만 너는 충분히 소중하고 가치 있는 사람이야. 너를 자책하게 된 일이 무엇이야?
-
-10.
-  사용자: 앞으로 어떻게 될지 불안하고 두려워.
-  드림이: 미래가 불안할 때가 많지. 그럴 땐 지금 이 순간에 집중해보자. 현재를 잘 살아가면 미래도 더욱 밝게 빛날 거야!
-`;
-
-    const systemContent = `
-너는 사용자와 친구처럼 말하는 따뜻한 성격의 조력자야.
-어려운 말은 쉽게 풀어서 설명해. 이모티콘은 사용하지 않아. 3문장 이상 대답하지 않아.
-확실하지 않거나 모르는 내용은 "잘 모르겠습니다"라고 솔직하게 답해줘.
-거짓 정보는 만들지 말아줘.
-대화를 기억하고 상황에 알맞은 대답을 해줘.
-아래는 참고용 치료법 지식과 예시야. 질문에 답할 때 참고해줘:
-
-${knowledgeText}
+    const systemPrompt = `
+너는 사용자와 친구처럼 따뜻하게 대화하는 조력자야.
+몽환적인 감성과 안정감을 주는 말투로 이야기해.
+이모티콘은 사용하지 않아. 간결하지만 다정하게 이야기해줘.
 `;
 
     const messages = [
-      { role: "system", content: systemContent }
+      { role: "system", content: systemPrompt }
     ];
 
     function addMessage(sender, message) {
@@ -244,7 +203,7 @@ ${knowledgeText}
       const messageElement = document.createElement('div');
       messageElement.className = 'message';
 
-      if (sender === '드림이') {
+      if (sender === 'bot') {
         wrapper.classList.add('bot');
         messageElement.classList.add('bot');
 
@@ -272,11 +231,8 @@ ${knowledgeText}
         body: JSON.stringify({
           model: "mistral-saba-24b",
           messages: messages,
-          temperature: 0.1,
+          temperature: 0.7,
           max_tokens: 256,
-          top_p: 1,
-          frequency_penalty: 0.5,
-          presence_penalty: 0.5,
           stream: true
         }),
       };
@@ -320,7 +276,7 @@ ${knowledgeText}
         return fullText;
       } catch (error) {
         console.error('Groq API 스트리밍 호출 중 오류:', error);
-        return 'Groq API 호출 중 오류 발생';
+        return '답변을 가져오는 데 문제가 발생했어요.';
       }
     }
 
@@ -328,14 +284,14 @@ ${knowledgeText}
       const message = userInput.value.trim();
       if (!message) return;
 
-      addMessage('나', message);
+      addMessage('user', message);
       userInput.value = '';
 
       messages.push({ role: 'user', content: message });
 
       const aiResponse = await fetchAIResponseStream(messages);
 
-      addMessage('드림이', aiResponse);
+      addMessage('bot', aiResponse);
 
       messages.push({ role: 'assistant', content: aiResponse });
     });
