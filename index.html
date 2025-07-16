@@ -171,9 +171,7 @@
     const apiKey = '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';
     const apiEndpoint = 'https://api.groq.com/openai/v1/chat/completions';
 
-    const welcomeMessage = "안녕하세요 저는 드림이에요! 오늘은 어떤 꿈을 꾸셨나요?";
-
-    const knowledgeText = `* 꿈에서 학교에 있었는데 갑자기 , 모든 친구들이 투명해져서 나 혼자만 보이는 거야 수업 .
+    const knowledgeText = * 꿈에서 학교에 있었는데 갑자기 , 모든 친구들이 투명해져서 나 혼자만 보이는 거야 수업 .
 은 계속 진행되는데 아무도 없는 빈 의자들 보면서 너무 외로웠어 깨고 . 나서도 뭔가 허전
 한 느낌이 들었어.
  이 꿈은 현재 당신이 외로움이나 소외감을 느끼고 있음을 나타낼 수 있어요 주변 . 사람
@@ -227,9 +225,11 @@
 *, 일상 속에서도 복잡함을 느끼는 상태는 어떻게 해야할까?
  일상 속에서도 복잡함을 느끼는 건, 머릿속이 늘 바쁘고 쉴 틈 없이 돌아간다는 뜻일 수 있어요.
 이럴 땐 먼저 자신에게 들려오는 '소음'이 뭔지 파악해보는 게 중요해요 — 다른 사람의 기대, 정보, 해야 할 일들 중에 진짜 중요한 게 뭔지 구분해보는 거예요.
-그리고 하루에 단 10분이라도 아무것도 하지 않고 멍 때리기, 휴대폰을 멀리 두고 산책하기 같은 ‘정리 시간’을 일부러 만들어보세요.`;
+그리고 하루에 단 10분이라도 아무것도 하지 않고 멍 때리기, 휴대폰을 멀리 두고 산책하기 같은 ‘정리 시간’을 일부러 만들어보세요.
 
-    const systemContent = `
+;
+
+    const systemContent = 
 너는 사용자와 친구처럼 말하는 따뜻한 성격의 챗봇이야.
 어려운 말은 적당히 쉽게 적당히 풀어서 설명해. 이모티콘은 사용하지 않아. 3문장 이상 대답하지 않아.
 확실하지 않거나 모르는 내용은 "정보가 없습니다. 잘 모르겠습니다."라고 솔직하게 답해줘.
@@ -241,7 +241,7 @@
 아래는 너의 말투와 말하는 방식을 지정해놓은 여러가지 예시문이야. 유저의 질문에 답할 때 참고해서 답변해줘:
 
 ${knowledgeText}
-`;
+;
 
     const messages = [
       { role: "system", content: systemContent }
@@ -277,7 +277,7 @@ ${knowledgeText}
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
+          'Authorization': Bearer ${apiKey}
         },
         body: JSON.stringify({
           model: "mistral-saba-24b",
