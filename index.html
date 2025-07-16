@@ -16,12 +16,12 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background: linear-gradient(240deg, #d9e2ff, #8863ff);
+      background: linear-gradient(135deg, #cbb4d4, #4e4376);
     }
     #chat-container {
-      width: 400px;
-      height: 600px;
-      border-radius: 18px;
+      width: 420px;
+      height: 620px;
+      border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 8px 30px rgba(0,0,0,0.2);
       background: rgba(255, 255, 255, 0.1);
@@ -36,7 +36,7 @@
       font-weight: 700;
       color: #f5f5f5;
       text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.25);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
       background-color: rgba(0, 0, 0, 0.2);
       user-select: none;
       position: relative;
@@ -98,12 +98,12 @@
       border-radius: 18px;
       word-break: break-word;
       line-height: 1.6;
-      font-size: 14px;
+      font-size: 15px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       backdrop-filter: blur(10px);
     }
     .message.user {
-      background: rgba(200, 220, 240, 0.3);
+      background: rgba(173, 216, 230, 0.25);
       border: 1px solid rgba(255,255,255,0.3);
       color: #fff;
       border-bottom-right-radius: 0;
@@ -131,13 +131,13 @@
       outline: none;
     }
     #user-input input::placeholder {
-      color: #fafafa;
+      color: #ccc;
     }
     #user-input button {
       margin-left: 10px;
       padding: 12px 16px;
       border: none;
-      background-color: #bbaadd;
+      background-color: #7a5ea8;
       color: white;
       cursor: pointer;
       font-size: 15px;
@@ -145,7 +145,7 @@
       transition: background-color 0.2s ease;
     }
     #user-input button:hover {
-      background-color: #a08fc2;
+      background-color: #5c4791;
     }
   </style>
 </head>
@@ -168,7 +168,7 @@
     const sendButton = document.querySelector('#user-input button');
     const backButton = document.querySelector('#back-button');
 
-    const apiKey = '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';
+    const apiKey = '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';
     const apiEndpoint = 'https://api.groq.com/openai/v1/chat/completions';
 
     const knowledgeText = * 꿈에서 학교에 있었는데 갑자기 , 모든 친구들이 투명해져서 나 혼자만 보이는 거야 수업 .
@@ -228,19 +228,19 @@
 그리고 하루에 단 10분이라도 아무것도 하지 않고 멍 때리기, 휴대폰을 멀리 두고 산책하기 같은 ‘정리 시간’을 일부러 만들어보세요.
 
 ;
+; // 생략 가능 (기존 전체 지식 텍스트 그대로 붙여넣기)
 
-    const systemContent = 
-너는 사용자와 친구처럼 말하는 따뜻한 성격의 챗봇이야.
-어려운 말은 적당히 사용하고 조금 풀어서 설명해. 이모티콘은 사용하지 않아. 3문장 이상 대답하지 않아.
-확실하지 않거나 모르는 내용은 "정보가 없습니다. 잘 모르겠습니다."라고 솔직하게 답해줘.
-꼭 사용자의 말에 답변을 해줘. 
-사용자가 "꿈을 꾸지 않았어" 라고 꿈을 꾸지 않았다는 어투로 얘기하면 "그렇다면 가장 최근에 꾼 꿈중에 기억에 남은 꿈이 있나요? 그 꿈에 대해 이야기 해주세요!"라고 답변해.
-그 전 대화를 저장해서 기억하고 상황에 알맞은 대답을 해줘.
-사용자가 "안녕", "헬로" 등 인삿말을 하면 "안녕하세요 저는 드림이에요! 오늘은 어떤 꿈을 꾸셨나요?"라고 대답해.
-아래는 너의 말투와 말하는 방식을 지정해놓은 여러가지 예시문이야. 유저의 질문에 답할 때 참고해서 답변해줘:
+    const systemContent = `
+너는 사용자와 친구처럼 말하는 따뜻한 성격의 조력자야.
+어려운 말은 쉽게 풀어서 설명해. 이모티콘은 사용하지 않아. 3문장 이상 대답하지 않아.
+확실하지 않거나 모르는 내용은 "잘 모르겠습니다"라고 솔직하게 답해줘.
+거짓 정보는 만들지 말아줘.
+대화를 기억하고 상황에 알맞은 대답을 해줘.
+사용자가 인사하면 "안녕하세요 저는 드림이에요. 오늘은 어떤 꿈을 꾸셨나요?"라고 대답해
+아래는 참고용 치료법 지식과 예시야. 질문에 답할 때 참고해줘:
 
 ${knowledgeText}
-;
+`;
 
     const messages = [
       { role: "system", content: systemContent }
@@ -276,7 +276,7 @@ ${knowledgeText}
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`
+          'Authorization': `Bearer ${apiKey}`
         },
         body: JSON.stringify({
           model: "mistral-saba-24b",
